@@ -11,9 +11,9 @@ class Enterprise::SentimentAnalysisJob < ApplicationJob
   end
 
   def save_message_sentiment(message)
-    # We are truncating the data here to avoind the OnnxRuntime::Error
+    # We are truncating the data here to avoid the OnnxRuntime::Error
     # Indices element out of data bounds, idx=512 must be within the inclusive range [-512,511]
-    # While gathering the maningfull node the Array/tensor index is going out of bound
+    # While gathering the meaningfull node the Array/tensor index is going out of bound
 
     text = message.content&.truncate(2900)
     return if model.blank?

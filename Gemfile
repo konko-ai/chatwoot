@@ -178,6 +178,15 @@ gem 'reverse_markdown'
 # Sentiment analysis
 gem 'informers'
 
+# Ruby lsp, rubocop
+gem "ruby-lsp"
+gem "rubocop"
+gem "rubocop-packaging"
+gem "rubocop-performance"
+gem "rubocop-rspec"
+gem "rubocop-shopify"
+gem "rubocop-thread_safety"
+
 ### Gems required only in specific deployment environments ###
 ##############################################################
 
