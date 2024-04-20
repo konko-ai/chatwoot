@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "vue$": [
+        "./node_modules/vue/dist/vue.common.js"
+      ],
+      "dashboard": [
+        "./app/javascript/dashboard"
+      ],
+      "widget": [
+        "./app/javascript/widget"
+      ],
+      "survey": [
+        "./app/javascript/survey"
+      ],
+      "assets": [
+        "./app/javascript/dashboard/assets"
+      ],
+      "components": [
+        "./app/javascript/dashboard/components"
+      ],
+      "helpers": [
+        "./app/javascript/shared/helpers"
+      ],
+      "./iconfont.eot": [
+        "./node_modules/vue-easytable/libs/font/iconfont.eot"
+      ],
+      "./iconfont.woff": [
+        "./node_modules/vue-easytable/libs/font/iconfont.woff"
+      ],
+      "./iconfont.ttf": [
+        "./node_modules/vue-easytable/libs/font/iconfont.ttf"
+      ],
+      "./iconfont.svg": [
+        "./node_modules/vue-easytable/libs/font/iconfont.svg"
+      ]
+    }
+  },
+  "include": [
+    "app/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
