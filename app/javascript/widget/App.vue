@@ -54,6 +54,8 @@ export default {
     return {
       isMobile: false,
       campaignsSnoozedTill: undefined,
+      chatBehavior: 'preview',
+      routeRules: undefined,
     };
   },
   computed: {
@@ -162,7 +164,15 @@ export default {
         if ((this.isWidgetOpen || !this.isIFrame) && routeName === 'messages') {
           this.$store.dispatch('conversation/setUserLastSeen');
         }
-        this.setUnreadView();
+        if (this.isIFrame && this.chatBehavior === 'open') {
+          this.replaceRoute('messages').then(() => this.unsetUnreadView());
+          if (!this.isWidgetOpen) {
+            IFrameHelper.sendMessage('toggle-open', { isOpen: true });
+            IFrameHelper.sendMessage({ event: 'toggleBubble' });
+          }
+        } else {
+          this.setUnreadView();
+        }
       });
       bus.$on(ON_UNREAD_MESSAGE_CLICK, () => {
         this.replaceRoute('messages').then(() => this.unsetUnreadView());
@@ -267,6 +277,19 @@ export default {
             isInBusinessHours: this.isInBusinessHours,
           });
           window.referrerURL = referrerURL;
+          if (this.routeRules) {
+            const url = new URL(referrerURL);
+            const path = url.pathname;
+            const routeKey = Object.keys(this.routeRules)?.find(key =>
+              path.includes(key)
+            );
+            const chatBehaviorForPath = this.routeRules[routeKey || 'preview'];
+            if (chatBehaviorForPath) {
+              this.chatBehavior = chatBehaviorForPath;
+            } else {
+              this.chatBehavior = 'preview';
+            }
+          }
           this.setReferrerHost(referrerHost);
         } else if (message.event === 'toggle-close-button') {
           this.isMobile = message.isMobile;
@@ -278,6 +301,14 @@ export default {
           this.$store.dispatch('conversationLabels/destroy', message.label);
         } else if (message.event === 'set-user') {
           this.$store.dispatch('contacts/setUser', message);
+        } else if (message.event === 'set-chat-behavior') {
+          if (message.payload === 'preview' || message.payload === 'open') {
+            this.chatBehavior = message.payload;
+          }
+        } else if (message.event === 'set-chat-route-based-behavior') {
+          if (message.payload) {
+            this.routeRules = message.payload;
+          }
         } else if (message.event === 'set-custom-attributes') {
           this.$store.dispatch(
             'contacts/setCustomAttributes',

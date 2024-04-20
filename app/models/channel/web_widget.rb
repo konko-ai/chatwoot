@@ -75,6 +75,25 @@ class Channel::WebWidget < ApplicationRecord
           })
         }
       })(document,\"script\");
+
+      window.addEventListener('chatwoot:ready', () => {
+        const chatwootIframe = document.getElementById(
+          'chatwoot_live_chat_widget',
+        );
+
+        if (chatwootIframe && chatwootIframe.contentWindow) {
+          setTimeout(() => {
+            chatwootIframe.contentWindow.postMessage(
+              'chatwoot-widget:{\"event\":\"set-chat-behavior\",\"payload\":\"open\"}',
+              '*',
+            ); // payload can be 'open' or 'preview' (default)
+            // chatwootIframe.contentWindow.postMessage(
+            //  'chatwoot-widget:{\"event\":\"set-chat-route-based-behavior\",\"payload\":{\"loading\":\"open\",\"error-handling\":\"open\",\"not-found\":\"open\"}}',
+            //  '*',
+            // ); // can be used to control the behavior of the chat widget based on the route
+          }, 2000);
+        }
+      });
     </script>
     "
   end
