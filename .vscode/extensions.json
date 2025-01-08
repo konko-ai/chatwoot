@@ -8,10 +8,6 @@
     "davidpallinder.rails-test-runner",
     // Eslint
     "dbaeumer.vscode-eslint",
-    // Auto Close Tag
-    "formulahendry.auto-close-tag",
-    // Auto Rename Tag
-    "formulahendry.auto-rename-tag",
     // Hight light colors
     "naumovs.color-highlight",
     // GitLens
